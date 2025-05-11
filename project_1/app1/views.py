@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import Room
+from .models import Room,Topic
 from .forms  import RoomForm
 
 # rooms=[
@@ -11,7 +11,8 @@ from .forms  import RoomForm
 
 def home(request):
     rooms= Room.objects.all()
-    context= {'rooms':rooms}
+    topics= Topic.objects.all()
+    context= {'rooms':rooms, 'topics': topics}
     return render(request,'app1/home.html', context)
 
 def room(request,pk):
@@ -21,6 +22,43 @@ def room(request,pk):
 
 
 def createRoom(request):
+        
     form = RoomForm()
+    
+    
+    if request.method=="POST": #if its a post request
+        form= RoomForm(request.POST)  
+        # send the data to check whether it matches the form schema aka db schema
+        if form.is_valid():  #if the schema aligns with info entered by user
+            form.save() #save the form aka form data on the "ROOM" Model, because this form inherited from the ROOM model
+            return redirect('home')  #then we redirect the user back to home page
+        
     context={'form':form}
     return render(request,'app1/room_form.html',context)
+
+
+def updateRoom(request,pk):
+    room= Room.objects.get(id=pk)
+    form = RoomForm(instance=room)
+    
+    context={'form':form}
+    if request.method=="POST": #if its a post request
+        form= RoomForm(request.POST, instance=room)  
+        # send the data to check whether it matches the form schema aka db schema
+        if form.is_valid():  #if the schema aligns with info entered by user
+            form.save() #save the form aka form data on the "ROOM" Model, because this form inherited from the ROOM model
+            return redirect('home')  #then we redirect the user back to home page
+        
+    return render(request, 'app1/room_form.html',context)
+
+
+def deleteRoom(request,pk):
+    room= Room.objects.get(id=pk)
+    
+    if request.method=="POST":
+        room.delete()
+        return redirect('home')
+        
+    return render(request,'app1/delete.html', {'obj':room})
+
+    
