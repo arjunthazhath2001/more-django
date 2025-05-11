@@ -1,0 +1,16 @@
+{%include 'navbar.html' %}
+
+
+{%block content%}
+
+<h1>
+    HOME TEMPLATE
+</h1>
+
+<div>
+    {%for room in rooms%}
+        {{room.id}}--<a href="{%url 'room' room.id%}">{{room.name}}</a>
+    {%endfor%}
+</div>
+
+{%endblock%}
