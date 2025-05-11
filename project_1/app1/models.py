@@ -32,5 +32,5 @@ class Message(models.Model):
     created= models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.body[0:50]
+        return f"{self.body[0:50]}-{self.room.name}"
 

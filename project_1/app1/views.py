@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Room
+from .forms  import RoomForm
 
 # rooms=[
 #     {'id':1, 'name':'arjun', 'age':20},
@@ -18,3 +19,8 @@ def room(request,pk):
     context= {'room':room}
     return render(request,'app1/room.html',context)
 
+
+def createRoom(request):
+    form = RoomForm()
+    context={'form':form}
+    return render(request,'app1/room_form.html',context)
