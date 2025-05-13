@@ -18,13 +18,19 @@
         <h3>
             BROWSE TOPICS
             <hr>
+
+            <div>
+                <a href="{% url 'home' %}">All</a>
+            </div>
+            <br>
             {%for topic in topics%}
 
             <div>                
                 
-                {{topic.name}}
+                <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
             
             </div>
+            <br>
 
 
             {%endfor%}
