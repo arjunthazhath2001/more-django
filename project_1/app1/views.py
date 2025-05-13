@@ -18,6 +18,13 @@ from django.contrib.auth.decorators import login_required
 
 
 def loginPage(request):
+    page='login'
+    
+    
+    
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method=="POST":
         username= request.POST.get('username')
         password= request.POST.get('password')
@@ -38,7 +45,7 @@ def loginPage(request):
             
         
         
-    context={}
+    context={'page':page}
     return render(request,'app1/login_register.html',context)
 
 
@@ -46,6 +53,13 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect("home")
+
+
+
+def registerPage(request):
+    page="register"
+    return render(request, 'app1/login_register.html')
+
 
 
 def home(request):
