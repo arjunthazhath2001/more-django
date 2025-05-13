@@ -83,9 +83,15 @@ def createRoom(request):
 
 
 @login_required(login_url="login")
+
 def updateRoom(request,pk):
     room= Room.objects.get(id=pk)
     form = RoomForm(instance=room)
+    
+    
+    if request.user != room.host:
+        return HttpResponse('you are not allowed')
+    
     
     context={'form':form}
     if request.method=="POST": #if its a post request
@@ -101,6 +107,10 @@ def updateRoom(request,pk):
 @login_required(login_url="login")
 def deleteRoom(request,pk):
     room= Room.objects.get(id=pk)
+    
+    
+    if request.user != room.host:
+        return HttpResponse('you are not allowed')
     
     if request.method=="POST":
         room.delete()
