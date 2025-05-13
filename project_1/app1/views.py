@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from .forms  import RoomForm
 from django.db.models import Q
+
+from django.contrib.auth.decorators import login_required
+
 # rooms=[
 #     {'id':1, 'name':'arjun', 'age':20},
 #     {'id':2, 'name':'anjali','age':20},
@@ -40,7 +43,9 @@ def loginPage(request):
 
 
 
-
+def logoutUser(request):
+    logout(request)
+    return redirect("home")
 
 
 def home(request):
@@ -60,6 +65,7 @@ def room(request,pk):
     return render(request,'app1/room.html',context)
 
 
+@login_required(login_url="login")
 def createRoom(request):
         
     form = RoomForm()
@@ -76,6 +82,7 @@ def createRoom(request):
     return render(request,'app1/room_form.html',context)
 
 
+@login_required(login_url="login")
 def updateRoom(request,pk):
     room= Room.objects.get(id=pk)
     form = RoomForm(instance=room)
@@ -91,6 +98,7 @@ def updateRoom(request,pk):
     return render(request, 'app1/room_form.html',context)
 
 
+@login_required(login_url="login")
 def deleteRoom(request,pk):
     room= Room.objects.get(id=pk)
     
