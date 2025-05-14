@@ -127,7 +127,9 @@ def createRoom(request):
         form= RoomForm(request.POST)  
         # send the data to check whether it matches the form schema aka db schema
         if form.is_valid():  #if the schema aligns with info entered by user
-            form.save() #save the form aka form data on the "ROOM" Model, because this form inherited from the ROOM model
+            room= form.save(commit=False) #save the form aka form data on the "ROOM" Model, because this form inherited from the ROOM model
+            room.host= request.user
+            room.save()
             return redirect('home')  #then we redirect the user back to home page
         
     context={'form':form}
