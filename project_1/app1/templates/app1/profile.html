@@ -1,43 +1,34 @@
-{%include 'navbar.html' %}
+{% extends 'main.html' %}
 
 
-{%block content%}
+
+
+{% block content %}
 
 <style>
-    .home-container {
+
+    .profile-container{
         display: grid;
         grid-template-columns: 1fr 3fr 1fr;
     }
+
 </style>
 
-<div class="home-container">
 
+<h1>{{ user.username }}</h1>
+
+<div class="profile-container">
     <div>
-
         {% include 'app1/topics_component.html' %}
     </div>
-
-
     <div>
-        <h4>{{room_count}} rooms available</h4>
-        <a href="{% url 'create-room'%}">CREATE-ROOM</a>
-        <hr>
-        <br>
-        <br>
-
         {% include 'app1/feed_component.html' %}
-
     </div>
-
-
     <div>
 
         {% include 'app1/activity_component.html' %}
 
     </div>
-
 </div>
 
-
-
-{%endblock%}
+{% endblock content %}
