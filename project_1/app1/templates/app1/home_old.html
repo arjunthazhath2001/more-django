@@ -1,0 +1,43 @@
+{%include 'navbar.html' %}
+
+
+{%block content%}
+
+<style>
+    .home-container {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
+
+<div class="home-container">
+
+    <div>
+
+        {% include 'app1/topics_component.html' %}
+    </div>
+
+
+    <div>
+        <h4>{{room_count}} rooms available</h4>
+        <a href="{% url 'create-room'%}">CREATE-ROOM</a>
+        <hr>
+        <br>
+        <br>
+
+        {% include 'app1/feed_component.html' %}
+
+    </div>
+
+
+    <div>
+
+        {% include 'app1/activity_component.html' %}
+
+    </div>
+
+</div>
+
+
+
+{%endblock%}
